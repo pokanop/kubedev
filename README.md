@@ -18,7 +18,7 @@ I feel though this is a nice baseline _if you set everything up_ where most thin
 
 This guide uses the following technologies and tools:
 
-- [docker](https://www.docker.com/)
+- [docker](#Docker) ![https://avatars0.githubusercontent.com/u/5429470?s=200&v=4](https://www.docker.com/)
 - [kubernetes](https://kubernetes.io/)
 - [minikube](https://github.com/kubernetes/minikube)
 - [helm](https://www.helm.sh/)
