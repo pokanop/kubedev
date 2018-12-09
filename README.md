@@ -16,6 +16,12 @@ The goal here is to run a bunch of services locally that are basically home brew
 
 I feel though this is a nice baseline _if you set everything up_ where most things afterward can be additive. Hopefully it may have something useful for folks other than me.
 
+Lastly, if something is incorrect then apologies in advance but surely someone must have once said:
+
+> It's easier to ask for forgiveness than for permission
+
+Feel free to post pull requests with fixes :floppy_disk:
+
 ---
 
 ## Technologies
@@ -55,7 +61,7 @@ Kubernetes comes with `kubectl` which is the command line interface to access yo
 
 [![Minikube Image](images/minikube.png)](https://github.com/kubernetes/minikube)
 
-Since Kubernetes is many services running together to form a cluster, it's not trivial to run independently but is usually deployed on the cloud like [AWS](https://aws.amazon.com/) or [GCP](https://cloud.google.com/gcp).
+Since Kubernetes is many services running together to form a cluster, it's not trivial to run independently but is usually deployed on the cloud as a managed services through providers like [AWS](https://aws.amazon.com/) or [GCP](https://cloud.google.com/gcp).
 
 Minikube is an awesome way to run a single Kubernetes cluster on your local machine. It's likely not recommended to use this for production but that's what I'm going to do because I don't have :moneybag:.
 
