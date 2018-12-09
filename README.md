@@ -109,7 +109,7 @@ No ecosystem is complete without a good CI system and Jenkins provides just that
 
 ## Guides
 
-- [Setting up Docker, Kubernetes, Minikube, and Helm](https://github.com/pokanop/kubedev/edit/master/setup-1.md)
-- [Setting up Kubeapps, Prometheus, and Grafana](https://github.com/pokanop/kubedev/edit/master/setup-2.md)
-- [Setting up Docker Registry, Chartmuseum, and Jenkins](https://github.com/pokanop/kubedev/edit/master/setup-3.md)
-- [Building and deploying a microservice](https://github.com/pokanop/kubedev/edit/master/microservice.md)
+- [Setting up Docker, Kubernetes, Minikube, and Helm](setup-1.md)
+- [Setting up Kubeapps, Prometheus, and Grafana](setup-2.md)
+- [Setting up Docker Registry, Chartmuseum, and Jenkins](setup-3.md)
+- [Building and deploying a microservice](microservice.md)
