@@ -114,7 +114,7 @@ Enable default ingress controller in minikube:
 $ minikube addons enable ingress
 ```
 
-> The default ingress controller in minikube is [`ingress-nginx`](https://github.com/kubernetes/ingress-nginx) and helps configure inbound requests to reach your services. More info can be found [here].(https://medium.com/@awkwardferny/getting-started-with-kubernetes-ingress-nginx-on-minikube-d75e58f52b6c)
+> The default ingress controller in minikube is [`ingress-nginx`](https://github.com/kubernetes/ingress-nginx) and helps configure inbound requests to reach your services. More info can be found [here](https://medium.com/@awkwardferny/getting-started-with-kubernetes-ingress-nginx-on-minikube-d75e58f52b6c).
 
 You'll want to configure minikube with enough memory and disk space because **once you start it, you'll have to delete the cluster to apply any changes**.
 
@@ -146,7 +146,9 @@ $ minikube dashboard
 
 At this point your Kubernetes cluster is live :boom: and in action. You will be able to create deployments and run your services in no time.
 
-The dashboard is a fantastic way to see your cluster in action. It can show you probably _everything_ Kubernetes has to offer including access to your pods. More info can be found [here].(https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+![Kubernetes Dashboard](../images/kubernetes-dash.png)
+
+The dashboard is a fantastic way to see your cluster in action. It can show you probably _everything_ Kubernetes has to offer including access to your pods. More info can be found [here](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/).
 
 ### Deleting minikube
 
@@ -163,7 +165,7 @@ To delete minikube you can run:
 minikube delete
 ```
 
-> Keep in mind every time you do this, you'll need to run `helm init` to install Tiller back into the cluster as well.
+> Keep in mind every time you do this, you'll need to run `helm init` to install Tiller back into the cluster as well after starting it again.
 
 ### Useful kubectl commands
 
@@ -177,7 +179,9 @@ NAME       STATUS   ROLES    AGE   VERSION
 minikube   Ready    master   5d    v1.10.0
 ```
 
-Kubernetes has the concept of namespaces where you can deploy in the cluster. Get the namespaces with:
+Kubernetes has the concept of namespaces where you can deploy in the cluster
+
+Get the namespaces with:
 
 ```
 $ kubectl get namespaces
@@ -307,7 +311,7 @@ Now the interesting bit comes when you want to customize the chart since vanilla
 To inspect chart:
 
 ```
-helm inspect values stable/mariadb
+$ helm inspect values stable/mariadb
 Fetched stable/mariadb-0.3.0.tgz to /Users/mattbutcher/Code/Go/src/k8s.io/helm/mariadb-0.3.0.tgz
 ## Bitnami MariaDB image version
 ## ref: https://hub.docker.com/r/bitnami/mariadb/tags/
