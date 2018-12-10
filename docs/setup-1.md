@@ -148,6 +148,23 @@ At this point your Kubernetes cluster is live :boom: and in action. You will be 
 
 The dashboard is a fantastic way to see your cluster in action. It can show you probably _everything_ Kubernetes has to offer including access to your pods. More info can be found [here].(https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
 
+### Deleting minikube
+
+If you configure minikube settings like memory for example, you'll need to delete the cluster and recreate one.
+
+To stop minikube just run:
+
+```
+minikube stop
+```
+
+To delete minikube you can run:
+```
+minikube delete
+```
+
+> Keep in mind every time you do this, you'll need to run `helm init` to install Tiller back into the cluster as well.
+
 ### Useful kubectl commands
 
 You can access your cluster easily using `kubectl`. It will connect to Kubernetes and allow you to manage the cluster with several commands.
@@ -303,6 +320,7 @@ imageTag: 10.1.14-r3
 ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
 ##
 # imagePullPolicy:
+...
 ```
 
 After creating a `custom.yaml` you can install with:

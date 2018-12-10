@@ -127,3 +127,5 @@ No ecosystem is complete without a good CI system and Jenkins provides just that
 - [Setting up Kubeapps, Prometheus, and Grafana](docs/setup-2.md)
 - [Setting up Docker Registry, Chartmuseum, and Jenkins](docs/setup-3.md)
 - [Building and deploying a microservice](docs/microservice.md)
+
+> Keep in mind that all these guides are about getting things to run and do not secure your installations. Using TLS and secure connections throughout would require more effort including setting up certificates as well.
