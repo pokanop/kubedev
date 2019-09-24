@@ -4,15 +4,15 @@ This is a step by step guide to help get a Kubernetes cluster running locally wi
 
 Once completed, ideally you should be able to build your own microservices and deploy locally using CI/CD. Additionally, you should be able see metrics from you applications as well as access your cluster.
 
-For more information on each technology, it is recommended to learn about them separately and in depth as this guide was made with a cursory understanding and may not choose the best settings or omit details, but it works for me:tm:.
+For more information on each technology, it is recommended to learn about them separately and in depth as this guide was made with a cursory understanding and may not choose the best settings or omit details, but it works for me™️.
 
 ---
 
 ## Motivation
 
-There are many technologies out there today and this is to help me remember how to get my dev environment set up and functional for deploying services locally. It does not intend to provide any guidance on best practices or inform on _the right way_ to do things. It's a culmination of my learnings on the internets :blush:
+There are many technologies out there today and this is to help me remember how to get my dev environment set up and functional for deploying services locally. It does not intend to provide any guidance on best practices or inform on _the right way_ to do things. It's a culmination of my learnings on the internets 😊
 
-The goal here is to run a bunch of services locally that are basically home brewed goods. To deploy on the :cloud: you'll have to take the extra steps in figuring out how to do that. I don't imagine it'd be too difficult but not a goal for this guide.
+The goal here is to run a bunch of services locally that are basically home brewed goods. To deploy on the ☁️ you'll have to take the extra steps in figuring out how to do that. I don't imagine it'd be too difficult but not a goal for this guide.
 
 I feel though this is a nice baseline _if you set everything up_ where most things afterward can be additive. Hopefully it may have something useful for folks other than me.
 
@@ -20,7 +20,7 @@ Lastly, if something is incorrect then apologies in advance but surely someone m
 
 > It's easier to ask for forgiveness than for permission
 
-Feel free to post pull requests with fixes :floppy_disk:
+Feel free to post pull requests with fixes 💾
 
 ---
 
@@ -63,7 +63,7 @@ Kubernetes comes with `kubectl` which is the command line interface to access yo
 
 Since Kubernetes is many services running together to form a cluster, it's not trivial to run independently but is usually deployed on the cloud as a managed services through providers like [AWS](https://aws.amazon.com/) or [GCP](https://cloud.google.com/gcp).
 
-Minikube is an awesome way to run a single Kubernetes cluster on your local machine. It's likely not recommended to use this for production but that's what I'm going to do because I don't have :moneybag:.
+Minikube is an awesome way to run a single Kubernetes cluster on your local machine. It's likely not recommended to use this for production but that's what I'm going to do because I don't have 💰.
 
 ### Helm
 
@@ -71,7 +71,7 @@ Minikube is an awesome way to run a single Kubernetes cluster on your local mach
 
 Helm is considered a package manager for Kubernetes. It uses the concept of a `Chart.yml` file to define an application, and templates that are rendered based on various values provided.
 
-It supports versioning deployments and rollbacks which is neat :squirrel: and saves from having to manually run `kubectl` repeatedly for a bunch of things that can be automated.
+It supports versioning deployments and rollbacks which is neat 🤤 and saves from having to manually run `kubectl` repeatedly for a bunch of things that can be automated.
 
 There is a service named Tiller that runs in your Kubernetes cluster that presumably does housekeeping and talks to the client interface `helm`.
 
@@ -117,7 +117,7 @@ Grafana is a dashboard for visualizing metrics with graphs and insights on how y
 
 [![Jenkins Image](images/jenkins.png)](https://jenkins.io/)
 
-No ecosystem is complete without a good CI system and Jenkins provides just that. This is the final piece that will take all of the applications and bind them together with :heart:. It will take the dockerized service, build it, and deploy it in your Kubernetes cluster automagically from your chart repository and Docker registry.
+No ecosystem is complete without a good CI system and Jenkins provides just that. This is the final piece that will take all of the applications and bind them together with ❤️. It will take the dockerized service, build it, and deploy it in your Kubernetes cluster automagically from your chart repository and Docker registry.
 
 ---
 

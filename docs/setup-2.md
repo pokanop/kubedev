@@ -4,35 +4,36 @@
 
 Install using:
 
-```
-$ helm install --name kubeapps --namespace kubeapps bitnami/kubeapps --set ingress.enabled=true
+```sh
+➜  helm repo add bitnami https://charts.bitnami.com/bitnami
+➜  helm install --name kubeapps --namespace kubeapps bitnami/kubeapps --set ingress.enabled=true
 ```
 
 > It seems that along with using a custom YAML file, you can set certain values on the CLI as well using `--set` here.
 
-This will install Kubeapps using `helm` and deploy it in your cluster in a new namespace called `kubeapps`. The value being set for `ingress.enabled=true` will tell expose the underlying service or dashboard that is defined by the chart to the host machine under `kubeapps.local`. However, you'll need to add this entry to point your minikube IP in `/etc/hosts`.
+This will install Kubeapps using `helm` and deploy it in your cluster in a new namespace called `kubeapps`. The value being set for `ingress.enabled=true` will expose the underlying service or dashboard that is defined by the chart to the host machine under `kubeapps.local`. However, you'll need to add this entry to point to your minikube IP in `/etc/hosts`.
 
 To do this, you can edit `/etc/hosts` directly or execute the following:
 
-```
-$ export CLUSTER_IP=$(minikube ip) # On Minikube. Use: `kubectl cluster-info` on others K8s clusters
-$ echo "Kubeapps URL: http://kubeapps.local/"
-$ echo "$CLUSTER_IP  kubeapps.local" | sudo tee -a /etc/hosts
+```sh
+➜  export CLUSTER_IP=$(minikube ip) # On Minikube. Use: `kubectl cluster-info` on others K8s clusters
+➜  echo "Kubeapps URL: http://kubeapps.local/"
+➜  echo "$CLUSTER_IP  kubeapps.local" | sudo tee -a /etc/hosts
 ```
 
 Open a browser and access Kubeapps using the obtained URL. Access to the Dashboard requires a Kubernetes API token to authenticate with the Kubernetes API server.
 
 Create the service account and role in Kubernetes:
 
-```
-$ kubectl create serviceaccount kubeapps-operator
-$ kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-admin --serviceaccount=default:kubeapps-operator
+```sh
+➜  kubectl create serviceaccount kubeapps-operator
+➜  kubectl create clusterrolebinding kubeapps-operator --clusterrole=cluster-admin --serviceaccount=default:kubeapps-operator
 ```
 
 Get the token:
 
-```
-$ kubectl get secret $(kubectl get serviceaccount kubeapps-operator -o jsonpath='{.secrets[].name}') -o jsonpath='{.data.token}' | base64 --decode
+```sh
+➜  kubectl get secret $(kubectl get serviceaccount kubeapps-operator -o jsonpath='{.secrets[].name}') -o jsonpath='{.data.token}' | base64 --decode
 ```
 
 > Pipe the last value into `pbcopy` and paste into the browser directly.
@@ -45,10 +46,10 @@ At this point you should see the dashboard after entering the key. Navigate to t
 
 If for whatever reason you want to clean up Kubeapps you can do the following to accomplish that:
 
-```
-$ helm delete --purge kubeapps
-$ kubectl delete crd apprepositories.kubeapps.com
-$ kubectl delete namespace kubeapps
+```sh
+➜  helm delete --purge kubeapps
+➜  kubectl delete crd apprepositories.kubeapps.com
+➜  kubectl delete namespace kubeapps
 ```
 
 ### Installing Prometheus
@@ -73,7 +74,7 @@ This brings you to the customization page where you can modify any of the values
 
 Part of the YAML under the `service` node needs to be updated to indicate that we want to enable ingress. The default value for `enabled` is `false` so needs to change. Additionally the `hosts` is an empty array `[]` so remove that and add an item for `prometheus.local` underneath. It appears like this after updating:
 
-```
+```yaml
   ingress:
     ## If true, Prometheus server Ingress will be created
     ##

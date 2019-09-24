@@ -4,20 +4,20 @@
 
 You can install Docker from their [main site](https://www.docker.com/get-started) or if you're on Mac use [homebrew](https://brew.sh):
 
-```
-$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```sh
+➜  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 Next let's install Docker:
 
-```
-$ brew cask install docker
+```sh
+➜  brew cask install docker
 ```
 
 Docker has a visual tool called [Kitematic](https://kitematic.com/) if you like to see what's running and logs in a GUI. To install that run:
 
-```
-$ brew cask install kitematic
+```sh
+➜  brew cask install kitematic
 ```
 
 > Now that you have Docker installed, a few things that might help are increasing the available cores and memory to it if you plan to run heavy workloads and disk space. You can do that by going to the preferences from the menu bar.
@@ -26,9 +26,9 @@ $ brew cask install kitematic
 
 Docker, out of the box, is pretty powerful and lets you pull images and run them directly. For example, if you wanted to run an instance of mongo db locally you could do the following:
 
-```
-$ mkdir -p /tmp/data
-$ docker run -d -p 27017:27017 -v ~/tmp/data:/data/db mongo
+```sh
+➜  mkdir -p /tmp/data
+➜  docker run -d -p 27017:27017 -v ~/tmp/data:/data/db mongo
 ```
 
 All this tells Docker is to run the `mongo` image (which it will find on the public image registry on Docker Hub). If the image doesn't exist locally, it'll pull _or download_ the image and the run it.  The other parameters like `-d` make it run as detached so execution in this shell can continue and `-p 27017:27017` exposes a port locally into the container.
@@ -46,16 +46,16 @@ Pretty decent [cheat sheet](https://github.com/wsargent/docker-cheat-sheet) for 
 It's pretty nice to be able to see what's going on in the container once you've run it.
 
 First let's see what docker images are running:
-```
-$ docker ps
+```sh
+➜  docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES
 9a2332e3e6ec        mongo               "docker-entrypoint.s…"   7 minutes ago       Up 7 minutes        0.0.0.0:27017->27017/tcp   silly_benz
 ```
 
 For the mongo image we just ran, we can run a shell with the following command and it drops us into the container:
 
-```
-$ docker exec -it 9a2332e3e6ec /bin/bash
+```sh
+➜  docker exec -it 9a2332e3e6ec /bin/bash
 root@9a2332e3e6ec:/#
 ```
 
@@ -63,7 +63,7 @@ This is using the container id `9a2332e3e6ec`, we could also have used the name 
 
 Running the mongo client which will automatically connect to the server yields:
 
-```
+```sh
 root@9a2332e3e6ec:/# mongo
 MongoDB shell version v4.0.4
 connecting to: mongodb://127.0.0.1:27017
@@ -89,7 +89,7 @@ To permanently disable this reminder, run the following command: db.disableFreeM
 >
 ```
 
-Neat huh :yum:
+Neat huh 😋
 
 ---
 
@@ -97,58 +97,79 @@ Neat huh :yum:
 
 Install virtualbox and minikube:
 
-```
-$ brew cask install virtualbox
-$ brew cask install minikube
-```
-
-Install kubectl:
-
-```
-$ brew install kubectl
+```sh
+➜  brew cask install virtualbox
+➜  brew cask install minikube
 ```
 
-Enable default ingress controller in minikube:
+Read the brew installation instructions carefully, you might need to take additional steps. In the `virtualbox` case you may need to go to Mac Security & Privacy -> General and allow a kernel extension for example to continue. If that is the case, rerun the command above.
 
-```
-$ minikube addons enable ingress
-```
+Install kubectl (this may actually be packaged now with `minikube` or `docker`):
 
-> The default ingress controller in minikube is [`ingress-nginx`](https://github.com/kubernetes/ingress-nginx) and helps configure inbound requests to reach your services. More info can be found [here](https://medium.com/@awkwardferny/getting-started-with-kubernetes-ingress-nginx-on-minikube-d75e58f52b6c).
+```sh
+➜  brew install kubectl
+```
 
 You'll want to configure minikube with enough memory and disk space because **once you start it, you'll have to delete the cluster to apply any changes**.
 
 Configure minikube if defaults aren't good enough:
 
+```sh
+➜  minikube config set disk-size 100g
+➜  minikube config set memory 8192
+➜  minikube config set cpus 2
 ```
-$ minikube config set disk-space 100g
-$ minikube config set memory 8192
-$ minikube config set cpus 2
+
+Start minikube:
+
+```sh
+➜  minikube start
 ```
+
+Enable default ingress controller in minikube:
+
+```sh
+➜  minikube config set ingress true
+```
+
+> The default ingress controller in minikube is [`ingress-nginx`](https://github.com/kubernetes/ingress-nginx) and helps configure inbound requests to reach your services. More info can be found [here](https://medium.com/@awkwardferny/getting-started-with-kubernetes-ingress-nginx-on-minikube-d75e58f52b6c).
 
 View settings with:
 
-```
-$ minikube config view
+```sh
+➜  minikube config view
+- cpus: 2
+- dashboard: true
 - disk-size: 100g
-- heapster: false
 - ingress: true
 - memory: 8192
-- cpus: 2
 ```
 
-Start minikube and view dashboard:
+At this point your Kubernetes cluster is live 💥 and in action. You will be able to create deployments and run your services in no time.
 
-```
-$ minikube start
-$ minikube dashboard
-```
+View dashboard using:
 
-At this point your Kubernetes cluster is live :boom: and in action. You will be able to create deployments and run your services in no time.
+```sh
+➜  minikube dashboard
+```
 
 ![Kubernetes Dashboard](../images/kubernetes-dash.png)
 
 The dashboard is a fantastic way to see your cluster in action. It can show you probably _everything_ Kubernetes has to offer including access to your pods. More info can be found [here](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/).
+
+Sometimes you want to access the dashboard from a remote machine but default proxy limits the access to the machine that minikube is running on. You can bypass using `kubectl proxy` directly:
+
+```sh
+➜  minikube dashboard --url=true
+🤔  Verifying dashboard health ...
+🚀  Launching proxy ...
+🤔  Verifying proxy health ...
+http://127.0.0.1:50853/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+
+➜  kubectl proxy --address='0.0.0.0' --disable-filter=true
+W0923 22:12:40.825392    7748 proxy.go:142] Request filter disabled, your proxy is vulnerable to XSRF attacks, please be cautious
+Starting to serve on [::]:8001
+```
 
 ### Deleting minikube
 
@@ -156,13 +177,13 @@ If you configure minikube settings like memory for example, you'll need to delet
 
 To stop minikube just run:
 
-```
-minikube stop
+```sh
+➜  minikube stop
 ```
 
 To delete minikube you can run:
-```
-minikube delete
+```sh
+➜  minikube delete
 ```
 
 > Keep in mind every time you do this, you'll need to run `helm init` to install Tiller back into the cluster as well after starting it again.
@@ -173,8 +194,8 @@ You can access your cluster easily using `kubectl`. It will connect to Kubernete
 
 Nodes are _like_ actual machines in a way. To see them, run:
 
-```
-$ kubectl get nodes
+```sh
+➜  kubectl get nodes
 NAME       STATUS   ROLES    AGE   VERSION
 minikube   Ready    master   5d    v1.10.0
 ```
@@ -183,8 +204,8 @@ Kubernetes has the concept of namespaces where you can deploy in the cluster
 
 Get the namespaces with:
 
-```
-$ kubectl get namespaces
+```sh
+➜  kubectl get namespaces
 NAME          STATUS   AGE
 default       Active   5d
 kube-public   Active   5d
@@ -196,8 +217,8 @@ The first 3 are created by default with minikube and you can deploy your service
 
 Get the deployments:
 
-```
-$ kubectl get deployments -n kube-system
+```sh
+➜  kubectl get deployments -n kube-system
 NAME                       DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 coredns                    1         1         1            1           5d
 default-http-backend       1         1         1            1           5d
@@ -209,8 +230,8 @@ tiller-deploy              1         1         1            1           5d
 
 See the ingresses:
 
-```
-$ kubectl get ingresses
+```sh
+➜  kubectl get ingresses
 NAME                       HOSTS               ADDRESS     PORTS   AGE
 chartmuseum-chartmuseum    chartmuseum.local   10.0.2.15   80      8h
 grafana                    grafana.local       10.0.2.15   80      8h
@@ -220,8 +241,8 @@ registry-docker-registry   registry.local      10.0.2.15   80      8h
 
 Finally, see the actual pods using:
 
-```
-$ kubectl get pods -o wide
+```sh
+➜  kubectl get pods -o wide
 NAME                                             READY   STATUS    RESTARTS   AGE   IP            NODE
 busybox                                          1/1     Running   9          12h   172.17.0.25   minikube
 chartmuseum-chartmuseum-668cfbd656-8fvbs         1/1     Running   0          8h    172.17.0.24   minikube
@@ -239,6 +260,16 @@ registry-docker-registry-794bb87bb9-w6zrj        1/1     Running   0          8h
 
 > The `-o wide` shows more information. Additionally you can watch them by just passing in `-w` and `kubectl` will print updates as state changes happen.
 
+See the logs from a specific pod using:
+
+```sh
+  kubectl logs <pod-name>
+  kubectl logs -f <pod-name> # like tail -f so shows continuously
+  kubectl logs -p <pod-name> # useful to see last pods' logs (in case of crash)
+```
+
+> A pretty useful CLI tool is [kubetail](https://github.com/johanhaleby/kubetail) which simplifies the `kubctl logs` command by matching pod names easily among other featuers.
+
 `kubectl` has many more commands for creating deployments and other types of resources but since we will be using Helm for the most part to handle that, it's not covered. Be sure to read up on it however since it's important to know how Kubernetes resources are defined via manifest files. More info can be found [here](https://kubernetes.io/docs/reference/kubectl/cheatsheet/).
 
 ---
@@ -247,22 +278,34 @@ registry-docker-registry-794bb87bb9-w6zrj        1/1     Running   0          8h
 
 Install Helm:
 
+```sh
+➜  brew install kubernetes-helm
 ```
-$ brew install kubernetes-helm
+
+Set up a service account for use by Tiller:
+
+```sh
+➜  kubectl -n kube-system create serviceaccount tiller
+➜  kubectl create clusterrolebinding tiller \
+  --clusterrole=cluster-admin \
+  --serviceaccount=kube-system:tiller
 ```
+
 
 Initialize Helm and install Tiller:
 
+```sh
+➜  helm init --service-account tiller
 ```
-$ helm init
-```
+
+> As of this writing, there is an issue with helm that needs to worked around. See [here](https://github.com/helm/helm/issues/6374).
 
 > This command will install Tiller in your cluster and configure Helm to deploy properly.
 
 Getting the latest charts:
 
-```
-$ helm repo update
+```sh
+➜  helm repo update
 ```
 
 ### Deploying Helm Charts
@@ -271,8 +314,8 @@ Helm uses charts for deployment. And by default, it adds a chart repository for 
 
 You can see what charts are available using:
 
-```
-$ helm search
+```sh
+➜  helm search
 NAME                                 	CHART VERSION	APP VERSION                 	DESCRIPTION
 bitnami/apache                       	4.0.0        	2.4.37                      	Chart for Apache HTTP Server
 bitnami/bitnami-common               	0.0.3        	0.0.1                       	Chart with custom tempaltes used in Bitnami charts.
@@ -284,8 +327,8 @@ bitnami/crypto                       	0.0.2        	                            
 
 Installing a chart:
 
-```
-$ helm install stable/mariadb
+```sh
+➜  helm install stable/mariadb
 Fetched stable/mariadb-0.3.0 to /Users/mattbutcher/Code/Go/src/k8s.io/helm/mariadb-0.3.0.tgz
 NAME: happy-panda
 LAST DEPLOYED: Wed Sep 28 12:32:28 2016
@@ -294,24 +337,24 @@ STATUS: DEPLOYED
 ...
 ```
 
-> Note you can change the default name like Docker with `--name` if you're not happy with :panda_face:.
+> Note you can change the default name like Docker with `--name` if you're not happy with 🐼.
 
 Check the status of a deployment:
 
-```
-$ helm status happy-panda
+```sh
+➜  helm status happy-panda
 Last Deployed: Wed Sep 28 12:32:28 2016
 Namespace: default
 Status: DEPLOYED
 ...
 ```
 
-Now the interesting bit comes when you want to customize the chart since vanilla :icecream: is never fun. Helm lets you inspect the customizable values for the chart as well and you can supply a config YAML with overrides simply.
+Now the interesting bit comes when you want to customize the chart since vanilla 🍦 is never fun enough. Helm lets you inspect the customizable values for the chart as well and you can supply a config YAML with overrides simply.
 
 To inspect chart:
 
-```
-$ helm inspect values stable/mariadb
+```sh
+➜  helm inspect values stable/mariadb
 Fetched stable/mariadb-0.3.0.tgz to /Users/mattbutcher/Code/Go/src/k8s.io/helm/mariadb-0.3.0.tgz
 ## Bitnami MariaDB image version
 ## ref: https://hub.docker.com/r/bitnami/mariadb/tags/
@@ -329,18 +372,48 @@ imageTag: 10.1.14-r3
 
 After creating a `custom.yaml` you can install with:
 
-```
-$ helm install -f config.yaml stable/mariadb
+```sh
+➜  helm install -f config.yaml stable/mariadb
 ```
 
 Next you'll want to delete your deployment with:
 
-```
-$ helm delete happy-panda
+```sh
+➜  helm delete happy-panda
 release "happy-panda" deleted
 ```
 
 > Note since Helm allows you to rollback it keeps a history of all these changes. You'd need to purge the changes as well to remove for good using `--purge`.
+
+### Troubleshooting Helm Charts
+
+Occasionally, installing helm charts can lead to failures sadly. Kubernetes, helm, and the like are constantly upgrading versions and you may run into issues.
+
+For example, the version of minikube that was installed at the time of this writing included Kubernetes 1.16.0 and helm was referring to incompatible or deprecated resources causing an error like this:
+
+```sh
+➜  helm init --service-account tiller
+$HELM_HOME has been configured at /Users/xxxx/.helm.
+Error: error installing: the server could not find the requested resource
+```
+
+The workaround(s), identified in this [issue](https://github.com/helm/helm/issues/6374) advised that you can redirect the helm configuration, modify it to work, and then manually apply it using `kubectl`:
+
+```sh
+➜  helm init --service-account tiller --debug > helm-init.yml
+➜  vim helm-init.yml
+➜  kubectl apply -f helm-init.yml
+```
+
+Another type issue stemming from version releases for setting up [kubeapps](https://kubeapps.com) for example, may require similar fanagling of configs. In this case `helm fetch` may be useful:
+
+```sh
+➜  helm fetch --untar bitnami/kubeapps
+```
+
+This drops the untarred specs into `.` or the current directory where you can modify the chart. Due to the same Kubernetes change in minikube, I had to apply the changes listed in this [diff](https://github.com/kubeapps/kubeapps/pull/1170/files) locally to get things working.
+
+> More info on `helm fetch` can be found in the [docs](https://helm.sh/docs/helm/#helm-fetch) for helm.
 
 ---
 
