@@ -97,7 +97,7 @@ When you _dockerize_ an application you use a `Dockerfile` and typically you bui
 
 [![Chartmuseum Image](images/chartmuseum.png)](https://github.com/helm/chartmuseum)
 
-Like Docker Registry, Helm charts also need a home so again there is a centralized repository for all public charts [here](https://github.com/helm/charts).  But you can run your own repository using Chartmuseum for private charts as well.
+Like Docker Registry, Helm charts also need a home so again there is a centralized repository for all public charts [here](https://github.com/helm/charts). But you can run your own repository using Chartmuseum for private charts as well.
 
 ### Prometheus
 
@@ -129,3 +129,7 @@ No ecosystem is complete without a good CI system and Jenkins provides just that
 - [Building and deploying a microservice](docs/microservice.md)
 
 > Keep in mind that all these guides are about getting things to run and do not secure your installations. Using TLS and secure connections throughout would require more effort including setting up certificates as well.
+
+## If You ♥️ What We Do
+
+<a href="https://www.buymeacoffee.com/pokanopapps" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217"></a>
